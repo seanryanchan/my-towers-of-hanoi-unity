@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-public class HanoiDisk : ScriptableObject
+public class HanoiDisk : Object
 {
 
     public enum PEG { LEFT, MIDDLE, RIGHT}
@@ -15,7 +15,9 @@ public class HanoiDisk : ScriptableObject
 
     public GameObject gameObject;
 
-    public HanoiDisk CreateInstance(int rank, Vector2 p, Sprite disk, Vector2 leftPeg, Vector2 middlePeg, Vector2 rightPeg, SpriteDrawMode drawMode)
+    public float scaleFact = 0.4f;
+
+    public HanoiDisk(int rank, Vector2 p, Sprite disk, Vector2 leftPeg, Vector2 middlePeg, Vector2 rightPeg, SpriteDrawMode drawMode)
     {
         this.rank = rank;
 
@@ -29,7 +31,7 @@ public class HanoiDisk : ScriptableObject
         spr.drawMode = drawMode;
         spr.sprite = disk;
 
-        spr.size += Vector2.right * (rank-1);
+        spr.size += Vector2.right * (rank-1) * scaleFact;
 
         gameObject.transform.position = p;
     }
@@ -44,8 +46,5 @@ public class HanoiDisk : ScriptableObject
         return peg;
     }
 
-    static void DoIt()
-    {
-        EditorUtility.DisplayDialog("MyTool", "Do It in C# !", "OK", "");
-    }
+
 }
