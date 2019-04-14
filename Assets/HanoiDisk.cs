@@ -15,9 +15,10 @@ public class HanoiDisk : Object
 
     public GameObject gameObject;
 
+    // scale factor
     public float scaleFact = 0.4f;
 
-    public HanoiDisk(int rank, Vector2 p, Sprite disk, Vector2 leftPeg, Vector2 middlePeg, Vector2 rightPeg, SpriteDrawMode drawMode)
+    public HanoiDisk(int rank, Sprite disk, Vector2 leftPeg, Vector2 middlePeg, Vector2 rightPeg, SpriteDrawMode drawMode)
     {
         this.rank = rank;
 
@@ -25,7 +26,6 @@ public class HanoiDisk : Object
         gameObject = new GameObject("Hanoi Block");
 
         leftBase = leftPeg; midBase = middlePeg; rightBase = rightPeg;
-        gameObject.transform.position = p;
 
         spr = gameObject.AddComponent<SpriteRenderer>();
         spr.drawMode = drawMode;
@@ -33,7 +33,6 @@ public class HanoiDisk : Object
 
         spr.size += Vector2.right * (rank-1) * scaleFact;
 
-        gameObject.transform.position = p;
     }
 
     public int GetRank()
