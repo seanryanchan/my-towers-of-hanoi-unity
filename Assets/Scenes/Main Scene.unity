@@ -824,6 +824,8 @@ MonoBehaviour:
   drawMode: 1
   counterText: {fileID: 1115929536}
   statusText: {fileID: 1804008280}
+  winDuration: 5
+  helpDuration: 8
   scaleFact: 0.3
 --- !u!1 &1031809244
 GameObject:

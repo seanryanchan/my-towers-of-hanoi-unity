@@ -25,6 +25,7 @@ public class DiskHandler : MonoBehaviour
     public TMP_Text statusText;
 
     public float winDuration = 5f;
+    public float helpDuration = 5f;
 
     public Stack<HanoiDisk> lPeg = new Stack<HanoiDisk>();
     public Stack<HanoiDisk> mPeg = new Stack<HanoiDisk>();
@@ -92,8 +93,11 @@ public class DiskHandler : MonoBehaviour
     HanoiDisk selectDisk = null;
     Vector3 initial= Vector3.zero;
     float timer;
+    int helpLevel;
+    float helpTimer;
     void Update()
     {
+
         if (WonGame())
         {
             if(timer < float.Epsilon)
@@ -107,7 +111,24 @@ public class DiskHandler : MonoBehaviour
         }
         else
         {
-            
+            if (helpTimer < float.Epsilon)
+            {
+                if (helpLevel == 0)
+                    statusText.text = "Welcome to Towers of Hanoi! Try to move all the disks to the rightmost peg by dragging them.";
+                if (helpLevel == 1)
+                    statusText.text = "You can only place disks on top! You cannot place a bigger disk on top of a smaller one.";
+                if (helpLevel == 2)
+                    statusText.text = "The best solution is done in " + (Mathf.Pow(2,noDisks) -1) + " moves.";
+
+            }
+            if (helpLevel < 3)
+                helpTimer += Time.deltaTime;
+            if (helpTimer > helpDuration)
+            {
+                helpTimer = 0;
+                statusText.text = "";
+                helpLevel++;
+            }
 
             if (Input.GetMouseButton(0) && fromStack == null)
             {
@@ -202,6 +223,7 @@ public class DiskHandler : MonoBehaviour
         }
         target.Push(h);
         BottomToCenter(h.gameObject);
+        h.gameObject.transform.position += Vector3.back;
     }
 
     public bool WonGame()
