@@ -8,3 +8,6 @@ sceneSetups:
 - path: Assets/PixelPack03_Free/Tilesheet.unity
   isLoaded: 0
   isActive: 0
+- path: Assets/Menu.unity
+  isLoaded: 0
+  isActive: 0

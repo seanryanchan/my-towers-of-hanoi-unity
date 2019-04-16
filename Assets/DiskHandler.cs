@@ -42,6 +42,7 @@ public class DiskHandler : MonoBehaviour
     // todo - bind stack to gameobject -- impossible (because it's binded already to the script) do the latter below.
     // todo - refactor diskhander to manage disks-prefabs (?)
 
+    public Stack<Tuple<Stack<HanoiDisk>, Stack<HanoiDisk>>> moveHistory = new Stack<Tuple<Stack<HanoiDisk>, Stack<HanoiDisk>>>();
 
     public Dictionary<Stack<HanoiDisk>, GameObject> stackDict = new Dictionary<Stack<HanoiDisk>, GameObject>();
 
@@ -155,6 +156,7 @@ public class DiskHandler : MonoBehaviour
                     if(AllowedMove(fromStack, targetStack))
                     {
                         MoveDisk(fromStack, targetStack);
+                        moveHistory.Push(new Tuple<Stack<HanoiDisk>, Stack<HanoiDisk>>(fromStack, targetStack));
                         IncrementMove();
                         fromStack = null; targetStack = null; selectDisk = null;
                     }
@@ -205,6 +207,7 @@ public class DiskHandler : MonoBehaviour
     public void MoveDisk(Stack<HanoiDisk> former, Stack<HanoiDisk> target)
     {
         // todo - try catch?
+
 
 
 
@@ -271,4 +274,18 @@ public class DiskHandler : MonoBehaviour
         counterText.text = moveCount.ToString();
     }
 
+    public void DecrementMove()
+    {
+        moveCount -= 1;
+        counterText.text = moveCount.ToString();
+    }
+
+    public void UndoMove(){
+        if(moveHistory.Count > 0)
+        {
+            Tuple<Stack<HanoiDisk>, Stack<HanoiDisk>> move = moveHistory.Pop();
+            MoveDisk(move.Second, move.First);
+            DecrementMove();
+        }
+    }
 }
