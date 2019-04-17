@@ -281,7 +281,7 @@ public class DiskHandler : MonoBehaviour
     }
 
     public void UndoMove(){
-        if(moveHistory.Count > 0)
+        if(moveHistory.Count > 0 && !WonGame())
         {
             Tuple<Stack<HanoiDisk>, Stack<HanoiDisk>> move = moveHistory.Pop();
             MoveDisk(move.Second, move.First);
